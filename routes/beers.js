@@ -1,7 +1,11 @@
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const config = require('config');
+const breweryDBKey = config.get('breweryDBKey');
+
 const User = require('../models/User');
 const Quote = require('../models/Quote');
 
@@ -9,11 +13,28 @@ const Quote = require('../models/Quote');
 // @desc      Get all user's quotes
 // @access    Private
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
+    const randomBeer = await axios.get(`https://sandbox-api.brewerydb.com/v2/beer/random/?key=${breweryDBKey}`);
+
+    const brewery = await axios.get(`https://sandbox-api.brewerydb.com/v2/beer/${randomBeer.data.data.id}/breweries/?key=${breweryDBKey}`);
+
+    const beers = await axios.get(`https://sandbox-api.brewerydb.com/v2/brewery/${brewery.data.data[0].id}/beers/?key=${breweryDBKey}`);
+
+    // const beerImgs = [];
+    //
+    // for (let i=0; i < beers.data.data.length; i++) {
+    //   if (beers.data.data[i].labels && beers.data.data[i].labels.large) {
+    //     beerImgs.push(beers.data.data[i].labels.large);
+    //   }
+    // }
+    res.json(beers.data.data);
+
+
     // The -1 is used to find the most recent contacts first
-    const quotes = await Quote.find({ user: req.user.id }).sort({ date: -1});
-    res.json(quotes);
+    // const quotes = await Quote.find({ user: req.user.id }).sort({ date: -1});
+    // res.json(quotes);
+    // res.status(200).send('Random beer fetched successfully!');
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
