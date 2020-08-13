@@ -1,38 +1,86 @@
-.App {
-  text-align: center;
+/* Color palette:
+
+Black: 000000
+Dark blue: 14213D
+Light orange: FCA311
+Light grey: E5E5E5
+White: FFFFFF */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-container {
+  width: 80%;
+  margin: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.medium-container {
+  width: 50%;
+  margin: auto;
   display: flex;
-  flex-direction: column;
+}
+
+.centered {
+  width: fit-content;
+  margin: auto;
+}
+
+.half-container {
+  width: 50%;
+  height: 10rem;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: column;
 }
 
-.App-link {
-  color: #61dafb;
+.half-container p {
+  display: flex;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.beer-item-card {
+  display: inline-block;
+  width: 10%;
+  /* height: auto; */
+  border: solid 1px black;
+  padding: .1rem;
+}
+
+.beer-item-img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  z-index: 1;
+  width: 100%;
+  border-bottom: solid 1px #14213D;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.navbar ul {
+  display: flex;
+  list-style-type: none;
+  align-items: flex-end;
+}
+
+.navbar li {
+  padding: 0 .5rem;
+}
+
+.no-underline {
+  text-decoration: none;
+  color: #000000;
+}
+
+.no-underline:focus {
+  outline: none;
 }
