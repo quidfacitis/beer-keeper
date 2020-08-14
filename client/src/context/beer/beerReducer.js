@@ -1,6 +1,7 @@
 import {
   GET_BEERS,
-  BEER_ERROR
+  BEER_ERROR,
+  RESET_LOADING,
 } from '../types';
 
 export default (state, action) => {
@@ -15,6 +16,11 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload
+      }
+    case RESET_LOADING:
+      return {
+        ...state,
+        beersLoading: true
       }
     default:
       return state;

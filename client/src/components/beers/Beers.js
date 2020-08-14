@@ -6,14 +6,27 @@ import BeerContext from '../../context/beer/beerContext';
 const Beers = () => {
 
   const beerContext = useContext(BeerContext);
-  const { beers, beersLoading, getBeers } = beerContext;
+  const { beers, beersLoading, getBeers, resetLoading } = beerContext;
   console.log(beers);
   console.log(beersLoading);
 
   const [displayedBeersPage, setDisplayedBeersPage] = useState(1);
+  const [showcasedBeer, setShowcasedBeer] = useState(null);
 
   const beerMiniPageButtons = [];
   let displayedBeers = [];
+
+  const findNewBeers = () => {
+    resetLoading();
+    console.log(`beersLoading is now ${beersLoading}`);
+    setShowcasedBeer(null);
+    getBeers();
+  }
+
+  const onMiniPageButtonClick = (pageNum) => {
+    setShowcasedBeer(null);
+    setDisplayedBeersPage(pageNum);
+  };
 
   if (!beersLoading && beers !== null) {
     let numBeerMiniPages = Math.ceil(beers.length / 10);
@@ -31,21 +44,26 @@ const Beers = () => {
     }
 
     for (let i = 1; i <= numBeerMiniPages; i++) {
-      beerMiniPageButtons.push(<button key={i} onClick={() => setDisplayedBeersPage(i)}>{i}</button>);
+      beerMiniPageButtons.push(<button key={i} onClick={() => onMiniPageButtonClick(i)}>{i}</button>);
     }
     console.log(`displayedBeers: ${displayedBeers}`);
   }
 
+
   return (
     <div>
       <div className="centered">
-        <button onClick={getBeers}>Find new beers</button>
+        <button onClick={findNewBeers}>Find new beers</button>
       </div>
       <div className="centered">
-        {!beersLoading && <ShowcasedBeer beer={displayedBeers[0]}/>}
+        {!beersLoading && <ShowcasedBeer beer={showcasedBeer === null ? displayedBeers[0] : showcasedBeer}/>}
       </div>
       <div className="centered">
-        {!beersLoading && displayedBeers.map(beer => <BeerItem key={beer.id} beer={beer} />)}
+        {!beersLoading && displayedBeers.map((beer, i) => (
+          <span onClick={() => setShowcasedBeer(beer)} key={i}>
+            <BeerItem key={beer.id} beer={beer} />
+          </span>
+        ))}
       </div>
       <div className="centered">
         {!beersLoading && beerMiniPageButtons}

@@ -22,6 +22,17 @@ White: FFFFFF */
   display: flex;
 }
 
+.title-container {
+  display: flex;
+}
+
+.small-img {
+  /* display: inline-block; */
+  height: 1.5rem;
+  width: 1.5rem;
+  margin: 0 0.5rem;
+}
+
 .centered {
   width: fit-content;
   margin: auto;

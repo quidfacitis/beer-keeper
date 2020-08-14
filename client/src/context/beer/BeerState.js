@@ -4,7 +4,8 @@ import BeerContext from './beerContext';
 import beerReducer from './beerReducer';
 import {
   GET_BEERS,
-  BEER_ERROR
+  BEER_ERROR,
+  RESET_LOADING,
 } from '../types';
 
 const BeerState = props => {
@@ -32,13 +33,21 @@ const BeerState = props => {
     }
   };
 
+  // set beersLoading to true
+  const resetLoading = () => {
+    dispatch({
+      type: RESET_LOADING
+    })
+  }
+
   return (
     <BeerContext.Provider
       value={{
         beers: state.beers,
         beersLoading: state.beersLoading,
         error: state.error,
-        getBeers
+        getBeers,
+        resetLoading
       }}
     >
       {props.children}
