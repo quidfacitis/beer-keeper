@@ -7,12 +7,12 @@ const Navbar = () => {
     <div className="navbar">
       <Link to='/' className="no-underline title-container"><img src={newThreeBeers} className="small-img" alt=''/>
         <h3>Beer Keeper | Keep track of your favorite beers. Discover new ones.</h3></Link>
-      <ul>
+      <ul >
         <li>
-          <Link to='/register'>Register</Link>
+          <Link to='/register' className="no-underline">Register</Link>
         </li>
         <li>
-          <Link to='/about'>About</Link>
+          <Link to='/about' className="no-underline">About</Link>
         </li>
       </ul>
     </div>

@@ -21,9 +21,10 @@ const BeerState = props => {
     try {
       const res = await axios.get('/api/beers');
       const beersWithLabels = res.data.filter(beer => beer.labels && beer.labels.large ? true : false);
+      const beersWithLabelsAndStyle = beersWithLabels.filter(beer => beer.style ? true : false);
       dispatch({
         type: GET_BEERS,
-        payload: beersWithLabels
+        payload: beersWithLabelsAndStyle
       });
     } catch (err) {
       dispatch({

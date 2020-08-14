@@ -53,10 +53,32 @@ const Beers = () => {
   return (
     <div>
       <div className="centered">
-        <button onClick={findNewBeers}>Find new beers</button>
+        <button onClick={findNewBeers} className="big-btn">Find new beers</button>
       </div>
-      <div className="centered">
-        {!beersLoading && <ShowcasedBeer beer={showcasedBeer === null ? displayedBeers[0] : showcasedBeer}/>}
+
+      <div className="title-container">
+        <div className="displayed-beer-column">
+          {!beersLoading && displayedBeers.slice(0, 5).map((beer, i) => (
+            <span onClick={() => setShowcasedBeer(beer)} key={i}>
+              <BeerItem key={beer.id} beer={beer} />
+            </span>
+          ))}
+        </div>
+        <div>
+          {!beersLoading && <ShowcasedBeer beer={showcasedBeer === null ? displayedBeers[0] : showcasedBeer}/>}
+        </div>
+        <div className="displayed-beer-column">
+          {!beersLoading && displayedBeers.slice(5).map((beer, i) => (
+            <span onClick={() => setShowcasedBeer(beer)} key={i}>
+              <BeerItem key={beer.id} beer={beer} />
+            </span>
+          ))}
+        </div>
+        
+      </div>
+
+      {/* <div className="centered">
+
       </div>
       <div className="centered">
         {!beersLoading && displayedBeers.map((beer, i) => (
@@ -64,7 +86,7 @@ const Beers = () => {
             <BeerItem key={beer.id} beer={beer} />
           </span>
         ))}
-      </div>
+      </div> */}
       <div className="centered">
         {!beersLoading && beerMiniPageButtons}
       </div>
