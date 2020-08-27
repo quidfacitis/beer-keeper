@@ -12,7 +12,7 @@ const ShowcasedBeer = ({ beer }) => {
     style
   } = beer;
 
-  const summaryText = style.description.slice(0, 250);
+  const summaryText = style.description.slice(0, 300);
 
   return (
     <div>
@@ -31,11 +31,7 @@ const ShowcasedBeer = ({ beer }) => {
         </div>
       </div>
       {descriptionIsClosed ? (
-        <details onClick={() => setDescriptionIsClosed(false)} className="description-cursor">
-          <summary>
-            {summaryText}...
-          </summary>
-        </details>
+        <p onClick={() => setDescriptionIsClosed(false)} className="description-cursor"><span className="material-icons" style={{verticalAlign: 'middle'}}>arrow_right</span>{summaryText}...</p>
       ) : (
         <p onClick={() => setDescriptionIsClosed(true)} className="description-cursor"><span className="material-icons" style={{verticalAlign: 'middle'}}>arrow_drop_down</span>{style.description}</p>
       )}

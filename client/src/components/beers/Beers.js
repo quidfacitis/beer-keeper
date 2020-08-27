@@ -44,7 +44,7 @@ const Beers = () => {
     }
 
     for (let i = 1; i <= numBeerMiniPages; i++) {
-      beerMiniPageButtons.push(<button key={i} onClick={() => onMiniPageButtonClick(i)}>{i}</button>);
+      beerMiniPageButtons.push(<button key={i} onClick={() => onMiniPageButtonClick(i)} className={i === displayedBeersPage ? "mini-page-btn-selected" : "mini-page-btn"}>{i}</button>);
     }
     console.log(`displayedBeers: ${displayedBeers}`);
   }
@@ -56,37 +56,25 @@ const Beers = () => {
         <button onClick={findNewBeers} className="big-btn">Find new beers</button>
       </div>
 
-      <div className="title-container">
-        <div className="displayed-beer-column">
+      <div className="beers-container">
+        <div className="displayed-beer-column-left">
           {!beersLoading && displayedBeers.slice(0, 5).map((beer, i) => (
             <span onClick={() => setShowcasedBeer(beer)} key={i}>
               <BeerItem key={beer.id} beer={beer} />
             </span>
           ))}
         </div>
-        <div>
+        <div className="showcased-beer-container">
           {!beersLoading && <ShowcasedBeer beer={showcasedBeer === null ? displayedBeers[0] : showcasedBeer}/>}
         </div>
-        <div className="displayed-beer-column">
+        <div className="displayed-beer-column-right">
           {!beersLoading && displayedBeers.slice(5).map((beer, i) => (
             <span onClick={() => setShowcasedBeer(beer)} key={i}>
               <BeerItem key={beer.id} beer={beer} />
             </span>
           ))}
         </div>
-        
       </div>
-
-      {/* <div className="centered">
-
-      </div>
-      <div className="centered">
-        {!beersLoading && displayedBeers.map((beer, i) => (
-          <span onClick={() => setShowcasedBeer(beer)} key={i}>
-            <BeerItem key={beer.id} beer={beer} />
-          </span>
-        ))}
-      </div> */}
       <div className="centered">
         {!beersLoading && beerMiniPageButtons}
       </div>
