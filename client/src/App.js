@@ -4,6 +4,7 @@ import Beers from './components/beers/Beers';
 import Navbar from './components/layout/Navbar';
 import About from './components/pages/About';
 import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 import BeerState from './context/beer/BeerState';
 import './App.css';
 
@@ -16,6 +17,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={Beers} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
             <Route exact path='/about' component={About} />
           </Switch>
         </div>

@@ -194,3 +194,30 @@ White: FFFFFF */
   width: 100%;
   object-fit: contain;
 }
+
+/* REGISTER AND LOGIN */
+
+.register-center {
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.form-line {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.register-btn {
+  width: 7rem;
+  height: 3rem;
+  padding: 0.25rem 0.5rem;
+  margin: auto;
+  color: #FCA311;
+  background-color: #14213D;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5%;
+  cursor: pointer;
+}

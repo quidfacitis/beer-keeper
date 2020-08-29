@@ -9,6 +9,9 @@ const Navbar = () => {
         <h3>Beer Keeper | Keep track of your favorite beers. Discover new ones.</h3></Link>
       <ul >
         <li>
+          <Link to='/login' className="no-underline">Login</Link>
+        </li>
+        <li>
           <Link to='/register' className="no-underline">Register</Link>
         </li>
         <li>
