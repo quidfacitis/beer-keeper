@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import AuthContext from '../../context/auth/authContext';
 
-const Login = () => {
+const Login = (props) => {
+
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, error, clearErrors, login } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/'); // redirect to home page
+    }
+    if (error === "Invalid credentials") {
+      alert('Invalid credentials!');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     email: '',
-    password: '',
+    password: ''
   });
 
   const {email, password} = user;
@@ -14,6 +30,10 @@ const Login = () => {
   const onSubmit = e => {
     e.preventDefault();
     console.log("onSubmit CLICKED IN LOGIN");
+    login({
+      email,
+      password
+    });
   };
 
   return (
