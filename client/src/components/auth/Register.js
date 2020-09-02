@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = () => {
+  const authContext = useContext(AuthContext);
+  const { register } = authContext;
 
   const [user, setUser] = useState({
     name: '',
@@ -16,6 +19,15 @@ const Register = () => {
   const onSubmit = e => {
     e.preventDefault();
     console.log("onSubmit CLICKED IN REGISTER");
+    if (password !== password2) {
+      alert("Passwords do not match!");
+    } else {
+      register({
+        name,
+        email,
+        password
+      });
+    }
   };
 
   return (

@@ -6,22 +6,25 @@ import About from './components/pages/About';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import BeerState from './context/beer/BeerState';
+import AuthState from './context/auth/AuthState';
 import './App.css';
 
 function App() {
   return (
     <BeerState>
-      <Router>
-        <Navbar />
-        <div className="app-container">
-          <Switch>
-            <Route exact path='/' component={Beers} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/about' component={About} />
-          </Switch>
-        </div>
-      </Router>
+      <AuthState>
+        <Router>
+          <Navbar />
+          <div className="app-container">
+            <Switch>
+              <Route exact path='/' component={Beers} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/about' component={About} />
+            </Switch>
+          </div>
+        </Router>
+      </AuthState>
     </BeerState>
   );
 }
