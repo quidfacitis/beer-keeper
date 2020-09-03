@@ -11,9 +11,10 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 // Define routes
-app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/beers', require('./routes/beers'));
+app.use('/api/breweryDB', require('./routes/breweryDB'));
+app.use('/api/users', require('./routes/users'));
 
 // Serve static assets in production
 

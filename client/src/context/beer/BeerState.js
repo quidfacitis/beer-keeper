@@ -19,7 +19,7 @@ const BeerState = props => {
   // Get beers
   const getBeers = async () => {
     try {
-      const res = await axios.get('/api/beers');
+      const res = await axios.get('/api/breweryDB');
       const beersWithLabels = res.data.filter(beer => beer.labels && beer.labels.large ? true : false);
       const beersWithLabelsAndStyle = beersWithLabels.filter(beer => beer.style ? true : false);
       dispatch({

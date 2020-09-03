@@ -2,115 +2,102 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { check, validationResult } = require('express-validator');
-const config = require('config');
-const breweryDBKey = config.get('breweryDBKey');
 
 const User = require('../models/User');
-const Quote = require('../models/Quote');
+const Beer = require('../models/Beer');
 
-// @route     GET api/quotes
-// @desc      Get all user's quotes
+// @route     GET api/beers
+// @desc      Get a user's beers
 // @access    Private
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const randomBeer = await axios.get(`https://sandbox-api.brewerydb.com/v2/beer/random/?key=${breweryDBKey}`);
-
-    const brewery = await axios.get(`https://sandbox-api.brewerydb.com/v2/beer/${randomBeer.data.data.id}/breweries/?key=${breweryDBKey}`);
-
-    const beers = await axios.get(`https://sandbox-api.brewerydb.com/v2/brewery/${brewery.data.data[0].id}/beers/?key=${breweryDBKey}`);
-
-    // const beerImgs = [];
-    //
-    // for (let i=0; i < beers.data.data.length; i++) {
-    //   if (beers.data.data[i].labels && beers.data.data[i].labels.large) {
-    //     beerImgs.push(beers.data.data[i].labels.large);
-    //   }
-    // }
-    res.json(beers.data.data);
-
-
-    // The -1 is used to find the most recent contacts first
-    // const quotes = await Quote.find({ user: req.user.id }).sort({ date: -1});
-    // res.json(quotes);
-    // res.status(200).send('Random beer fetched successfully!');
+  // The -1 is used to find the most recent contacts first
+    const beers = await Beer.find({ user: req.user.id }).sort({ date: -1});
+    res.json(beers);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route     POST api/quotes
-// @desc      Add new contact
+// @route     POST api/beers
+// @desc      Add new beer
 // @access    Private
 
-router.post('/', [auth, [
-  check('text', 'Quote is required').not().isEmpty()
-]], async (req, res)  => {
-  const errors = validationResult(req);
-  if(!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  const { text, author } = req.body;
+router.post('/', auth, async (req, res)  => {
+
+  const { name, type, abv, description, rating } = req.body;
+
   try {
-    const newQuote = new Quote({
-      text,
-      author,
+    let beer = await Beer.findOne({ name, user: req.user.id });
+    if (beer) {
+      // 400 == bad request
+      return res.status(400).json({ msg: 'Beer already exists'});
+    }
+    beer = new Beer({
+      name,
+      type,
+      abv,
+      description,
+      rating,
       user: req.user.id
     });
-    const quote = await newQuote.save();
-    res.json(quote);
+    await beer.save();
+    res.json(beer);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route     PUT api/quotes/:id
-// @desc      Update quote
+// @route     PUT api/beers/:id
+// @desc      Update beer
 // @access    Private
 
 router.put('/:id', auth, async (req, res)  => {
-  const { text, author } = req.body;
-  // Build quote object
-  const quoteFields = {};
-  if (text) quoteFields.text = text;
-  if (author) quoteFields.author = author;
+  const { name, type, abv, description, rating } = req.body;
+  // Build beer object
+  const beerFields = {};
+  if (name) beerFields.name = name;
+  if (type) beerFields.type = type;
+  if (abv) beerFields.abv = abv;
+  if (description) beerFields.description = description;
+  if (rating) beerFields.rating = rating;
 
   try {
-    let quote = await Quote.findById(req.params.id);
+    let beer = await Beer.findById(req.params.id);
     // 404 == not found
-    if (!quote) return res.status(404).json({ msg: 'Quote not found' });
-    // Make sure user owns quote
-    if (quote.user.toString() !== req.user.id) {
+    if (!beer) return res.status(404).json({ msg: 'Beer not found' });
+    // Make sure user owns beer
+    if (beer.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized'});
     }
-    quote = await Quote.findByIdAndUpdate(req.params.id,
-      { $set: quoteFields },
+    beer = await Beer.findByIdAndUpdate(req.params.id,
+      { $set: beerFields },
       { new: true }); // new fields are accepted
-    res.json(quote);
+    res.json(beer);
   } catch (err)  {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route     DELETE api/quotes/:id
-// @desc      Delete quote
+// @route     DELETE api/beers/:id
+// @desc      Delete beer
 // @access    Private
 
 router.delete('/:id', auth, async (req, res)  => {
   try {
-    let quote = await Quote.findById(req.params.id);
+    let beer = await Beer.findById(req.params.id);
     // 404 == not found
-    if (!quote) return res.status(404).json({ msg: 'Quote not found' });
+    if (!beer) return res.status(404).json({ msg: 'Beer not found' });
     // Make sure user owns contact
-    if (quote.user.toString() !== req.user.id) {
+    if (beer.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'Not authorized'});
     }
-    await Quote.findByIdAndRemove(req.params.id);
-    res.json({ msg: 'Quote removed' });
+    await Beer.findByIdAndRemove(req.params.id);
+    res.json({ msg: 'Beer removed' });
   } catch (err)  {
     console.error(err.message);
     res.status(500).send('Server error');
