@@ -18,3 +18,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 export const GET_BEER_LIBRARY = 'GET_BEER_LIBRARY';
 export const BEER_LIBRARY_ERROR = 'BEER_LIBRARY_ERROR';
+export const ADD_BEER = 'ADD_BEER';
+export const ADD_BEER_ERROR = 'ADD_BEER_ERROR';

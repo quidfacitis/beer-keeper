@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
 import BeerLibraryItem from './BeerLibraryItem';
+import BeerForm from './BeerForm';
 
 const BeerLibrary = () => {
 
@@ -14,6 +15,7 @@ const BeerLibrary = () => {
 
   return (
     <Fragment>
+      <BeerForm />
       {beerLibrary !== null && beerLibrary.map(beer => <BeerLibraryItem key={beer._id} beer={beer}/>)}
     </Fragment>
   )
