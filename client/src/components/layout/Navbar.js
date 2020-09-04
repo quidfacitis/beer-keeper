@@ -16,6 +16,9 @@ const Navbar = () => {
     <Fragment>
       <li className="no-underline">Hello, {user && user.name}</li>
       <li>
+        <Link to='/beerlibrary' className="no-underline">Beer Library</Link>
+      </li>
+      <li>
         <a href='#!' onClick={onLogout} className="no-underline">Logout</a>
       </li>
     </Fragment>
