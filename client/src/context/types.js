@@ -20,3 +20,6 @@ export const GET_BEER_LIBRARY = 'GET_BEER_LIBRARY';
 export const ADD_BEER = 'ADD_BEER';
 export const DELETE_BEER = 'DELETE_BEER';
 export const BEER_LIBRARY_ERROR = 'BEER_LIBRARY_ERROR';
+export const SET_CURRENT_BEER = 'SET_CURRENT_BEER';
+export const CLEAR_CURRENT_BEER = 'CLEAR_CURRENT_BEER';
+export const UPDATE_BEER = 'UPDATE_BEER';

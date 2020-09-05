@@ -6,6 +6,9 @@ import {
   GET_BEER_LIBRARY,
   ADD_BEER,
   DELETE_BEER,
+  SET_CURRENT_BEER,
+  CLEAR_CURRENT_BEER,
+  UPDATE_BEER,
   BEER_LIBRARY_ERROR
 } from '../types';
 
@@ -13,7 +16,8 @@ const BeerLibraryState = props => {
   const initialState = {
     beerLibrary: null,
     loading: true,
-    error: null
+    error: null,
+    current: null
   }
   const [state, dispatch] = useReducer(beerLibraryReducer, initialState);
 
@@ -57,7 +61,7 @@ const BeerLibraryState = props => {
   // Delete beer
   const deleteBeer = async beerId => {
     try {
-      const res = await axios.delete(`api/beers/${beerId}`);
+      await axios.delete(`api/beers/${beerId}`);
       dispatch({
         type: DELETE_BEER,
         payload: beerId
@@ -70,15 +74,52 @@ const BeerLibraryState = props => {
     }
   }
 
+  // Set current beer
+  const setCurrentBeer = beer => {
+    dispatch({
+      type: SET_CURRENT_BEER,
+      payload: beer
+    });
+  };
+
+  // Clear current beer
+  const clearCurrentBeer = () => dispatch({ type: CLEAR_CURRENT_BEER });
+
+  // Update beer
+  const updateBeer = async beer => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const res = await axios.put(`api/beers/${beer._id}`, beer, config);
+      dispatch({
+        type: UPDATE_BEER,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: BEER_LIBRARY_ERROR,
+        payload: err.response.msg
+      });
+    }
+  }
+
+
   return (
     <BeerLibraryContext.Provider
       value={{
         beerLibrary: state.beerLibrary,
         loading: state.loading,
+        current: state.current,
         error: state.error,
         getBeerLibrary,
         addBeer,
-        deleteBeer
+        deleteBeer,
+        setCurrentBeer,
+        clearCurrentBeer,
+        updateBeer
       }}
     >
       {props.children}

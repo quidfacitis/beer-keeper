@@ -3,7 +3,7 @@ import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
 
 const BeerLibraryItem = ({ beer }) => {
   const beerLibraryContext = useContext(BeerLibraryContext);
-  const { deleteBeer } = beerLibraryContext;
+  const { deleteBeer, setCurrentBeer, clearCurrentBeer } = beerLibraryContext;
 
   const {
     _id,
@@ -16,6 +16,7 @@ const BeerLibraryItem = ({ beer }) => {
 
   const onDelete = () => {
     deleteBeer(_id);
+    clearCurrentBeer();
   };
 
   return (
@@ -26,6 +27,7 @@ const BeerLibraryItem = ({ beer }) => {
       {description && <p>{description}</p>}
       {rating && <p>{rating}</p>}
       <button onClick={onDelete}>Delete</button>
+      <button onClick={() => setCurrentBeer(beer)}>Edit</button>
     </div>
   )
 }

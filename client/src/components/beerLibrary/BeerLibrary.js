@@ -13,7 +13,6 @@ const BeerLibrary = () => {
   // const authContext = useContext(AuthContext);
   // const { isAuthenticated } = authContext;
 
-
   useEffect(() => {
     getBeerLibrary();
   // eslint-disable-next-line
