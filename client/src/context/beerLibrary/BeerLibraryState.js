@@ -4,9 +4,9 @@ import BeerLibraryContext from './beerLibraryContext';
 import beerLibraryReducer from './beerLibraryReducer';
 import {
   GET_BEER_LIBRARY,
-  BEER_LIBRARY_ERROR,
   ADD_BEER,
-  ADD_BEER_ERROR
+  DELETE_BEER,
+  BEER_LIBRARY_ERROR
 } from '../types';
 
 const BeerLibraryState = props => {
@@ -34,7 +34,6 @@ const BeerLibraryState = props => {
   };
 
   // Add beer
-
   const addBeer = async beer => {
     const config = {
       headers: {
@@ -49,12 +48,27 @@ const BeerLibraryState = props => {
       })
     } catch (err) {
       dispatch({
-        type: ADD_BEER_ERROR,
+        type: BEER_LIBRARY_ERROR,
         payload: err.response.msg
       })
     }
-
   };
+
+  // Delete beer
+  const deleteBeer = async beerId => {
+    try {
+      const res = await axios.delete(`api/beers/${beerId}`);
+      dispatch({
+        type: DELETE_BEER,
+        payload: beerId
+      });
+    } catch (err) {
+      dispatch({
+        type: BEER_LIBRARY_ERROR,
+        payload: err.response.msg
+      });
+    }
+  }
 
   return (
     <BeerLibraryContext.Provider
@@ -63,7 +77,8 @@ const BeerLibraryState = props => {
         loading: state.loading,
         error: state.error,
         getBeerLibrary,
-        addBeer
+        addBeer,
+        deleteBeer
       }}
     >
       {props.children}

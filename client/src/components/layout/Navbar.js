@@ -1,11 +1,20 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import newThreeBeers from './new_three_beers.png';
 
 const Navbar = () => {
   const authContext = useContext(AuthContext);
-  const { user, isAuthenticated, logout } = authContext;
+  const { user, isAuthenticated, logout, loadUser } = authContext;
+
+  // By putting loadUser() in the Navbar, which is present througout the app,
+  // the variable "isAuthenticated" is reset to "true" every time the app re-renders.
+  // This fixes the problem of "isAuthenticated" being reset to "null" when the page
+  // was refreshed.
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line
+  }, []);
 
   const onLogout = () => {
     logout();

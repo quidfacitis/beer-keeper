@@ -221,3 +221,46 @@ White: FFFFFF */
   border-radius: 5%;
   cursor: pointer;
 }
+
+/* BEER LIBRARY */
+
+.beer-library-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.beer-form-width {
+  width: 40%;
+}
+
+.beer-library-item-width {
+  width: 60%;
+}
+
+
+/* BEER FORM */
+
+.add-beer-btn {
+  width: 7rem;
+  height: fit-content;
+  padding: 0.25rem 0.5rem;
+  margin: auto;
+  color: #FCA311;
+  background-color: #14213D;
+  font-size: 1.1rem;
+  white-space: normal;
+  font-weight: bold;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+/* BEER LIBRARY ITEM */
+
+.beer-library-item-card {
+  border: 1px solid #000000;
+  margin-bottom: 1rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}

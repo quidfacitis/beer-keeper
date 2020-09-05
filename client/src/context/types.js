@@ -17,6 +17,6 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 // For BeerLibraryState
 
 export const GET_BEER_LIBRARY = 'GET_BEER_LIBRARY';
-export const BEER_LIBRARY_ERROR = 'BEER_LIBRARY_ERROR';
 export const ADD_BEER = 'ADD_BEER';
-export const ADD_BEER_ERROR = 'ADD_BEER_ERROR';
+export const DELETE_BEER = 'DELETE_BEER';
+export const BEER_LIBRARY_ERROR = 'BEER_LIBRARY_ERROR';
