@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import hops from './hops.png';
+import AuthContext from '../../context/auth/authContext';
+import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
 
 const ShowcasedBeer = ({ beer }) => {
+
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated } = authContext;
+
+  const beerLibraryContext = useContext(BeerLibraryContext);
+  const { addBeer } = beerLibraryContext;
 
   const [ descriptionIsClosed, setDescriptionIsClosed ] = useState(true);
 
@@ -14,6 +22,14 @@ const ShowcasedBeer = ({ beer }) => {
 
   const summaryText = style.description.slice(0, 300);
 
+  const onAddBeer = () => {
+    addBeer({
+      name,
+      type: style.name,
+      abv
+    });
+  };
+
   return (
     <div>
       <div className="medium-container">
@@ -24,6 +40,7 @@ const ShowcasedBeer = ({ beer }) => {
             <p>{style.name}</p>
             <img src={hops} alt='' className="hops-divider" />
             <p>Abv: {abv}</p>
+            {isAuthenticated && <button onClick={onAddBeer}>Add to library</button>}
           </div>
         </div>
         <div className="showcased-beer-img">
