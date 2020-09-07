@@ -19,13 +19,23 @@ const BeerLibraryItem = ({ beer }) => {
     clearCurrentBeer();
   };
 
+  const ratingStars = [];
+
+  for (let i=1; i <= 5; i++ ) {
+    if (i <= rating) {
+      ratingStars.push(<span key={i} className="material-icons" style={{color: '#14213D'}}>star_rate</span>);
+    } else {
+      ratingStars.push(<span key={i} className="material-icons" style={{color: '#E5E5E5'}}>star_rate</span>);
+    }
+  }
+
   return (
     <div className="beer-library-item-card">
       {name && <p>{name}</p>}
       {type && <p>{type}</p>}
       {abv && <p>{abv}</p>}
       {description && <p>{description}</p>}
-      {rating && <p>{rating}</p>}
+      {<p>{ratingStars}</p>}
       <button onClick={onDelete}>Delete</button>
       <button onClick={() => setCurrentBeer(beer)}>Edit</button>
     </div>
