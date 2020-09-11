@@ -27,7 +27,7 @@ router.get('/', auth, async (req, res) => {
 
 router.post('/', auth, async (req, res)  => {
 
-  const { name, type, abv, description, rating } = req.body;
+  const { name, type, abv, description, rating, imgURL } = req.body;
 
   try {
     let beer = await Beer.findOne({ name, user: req.user.id });
@@ -41,6 +41,7 @@ router.post('/', auth, async (req, res)  => {
       abv,
       description,
       rating,
+      imgURL,
       user: req.user.id
     });
     await beer.save();
@@ -56,7 +57,7 @@ router.post('/', auth, async (req, res)  => {
 // @access    Private
 
 router.put('/:id', auth, async (req, res)  => {
-  const { name, type, abv, description, rating } = req.body;
+  const { name, type, abv, description, rating, imgURL } = req.body;
   // Build beer object
   const beerFields = {};
   if (name) beerFields.name = name;
@@ -64,6 +65,7 @@ router.put('/:id', auth, async (req, res)  => {
   if (abv) beerFields.abv = abv;
   if (description) beerFields.description = description;
   if (rating) beerFields.rating = rating;
+  if (imgURL) beerFields.imgURL = imgURL;
 
   try {
     let beer = await Beer.findById(req.params.id);

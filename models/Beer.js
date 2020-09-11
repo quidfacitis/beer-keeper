@@ -21,6 +21,9 @@ const BeerSchema = mongoose.Schema({
   rating: {
     type: Number
   },
+  imgURL: {
+    type: String
+  },
   date: {
     type: Date,
     default: Date.now

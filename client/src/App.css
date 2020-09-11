@@ -263,4 +263,58 @@ White: FFFFFF */
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+  /* display: flex; */
+}
+
+.top-flex-container-beer-library-item {
+  width: 100%;
+  display: flex;
+}
+
+.top-left-container-beer-library-item {
+  width: 70%;
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+.top-right-container-beer-library-item {
+  width: 30%;
+  padding-right: 1rem;
+}
+
+.buttons-beer-library-item {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #000000;
+  font-size: 0.7rem;
+  font-style: inherit;
+}
+
+.buttons-beer-library-item:hover,
+.buttons-beer-library-item:active {
+  color: #FCA311;
+}
+
+.button-divider {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.middle-flex-container-beer-library-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+}
+
+.bottom-flex-container-beer-library-item {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.3rem;
 }

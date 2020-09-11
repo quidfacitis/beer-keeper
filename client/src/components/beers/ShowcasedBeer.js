@@ -26,7 +26,8 @@ const ShowcasedBeer = ({ beer }) => {
     addBeer({
       name,
       type: style.name,
-      abv
+      abv,
+      imgURL: labels.large
     });
   };
 

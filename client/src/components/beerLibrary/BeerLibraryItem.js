@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import hops from '../beers/hops.png';
 import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
 
 const BeerLibraryItem = ({ beer }) => {
@@ -11,7 +12,8 @@ const BeerLibraryItem = ({ beer }) => {
     type,
     abv,
     description,
-    rating
+    rating,
+    imgURL
   } = beer;
 
   const onDelete = () => {
@@ -31,13 +33,25 @@ const BeerLibraryItem = ({ beer }) => {
 
   return (
     <div className="beer-library-item-card">
-      {name && <p>{name}</p>}
-      {type && <p>{type}</p>}
-      {abv && <p>{abv}</p>}
-      {description && <p>{description}</p>}
-      {<p>{ratingStars}</p>}
-      <button onClick={onDelete}>Delete</button>
-      <button onClick={() => setCurrentBeer(beer)}>Edit</button>
+      <div className="top-flex-container-beer-library-item">
+        <div className="top-left-container-beer-library-item">
+          {name && <p>{name}</p>}
+          {type && <p>{type}</p>}
+          {abv && <p>{abv}</p>}
+          {<p>{ratingStars}</p>}
+        </div>
+        <div className="top-right-container-beer-library-item">
+          <img src={imgURL ? imgURL : hops} alt='' className='beer-item-img' />
+        </div>
+      </div>
+      <div className="middle-flex-container-beer-library-item">
+        {description && <p><em>{description}</em></p>}
+      </div>
+      <div className="bottom-flex-container-beer-library-item">
+        <button onClick={onDelete} className="buttons-beer-library-item">Delete </button>
+        <span className="button-divider"> | </span>
+        <button onClick={() => setCurrentBeer(beer)} className="buttons-beer-library-item">Edit</button>
+      </div>
     </div>
   )
 }
