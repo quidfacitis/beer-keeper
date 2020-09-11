@@ -280,6 +280,45 @@ White: FFFFFF */
 .top-right-container-beer-library-item {
   width: 30%;
   padding-right: 1rem;
+  position: relative;
+}
+
+.beer-library-item-img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.opaque {
+  opacity: 0.3;
+}
+
+.right-img-arrow {
+  position: absolute;
+  color: #000000;
+  font-size: 2.5rem;
+  right: 1rem;
+  top: 2.5rem;
+  cursor: pointer;
+  /* display: none; */
+}
+
+.left-img-arrow {
+  position: absolute;
+  color: #000000;
+  font-size: 2.5rem;
+  left: 0;
+  top: 2.5rem;
+  cursor: pointer;
+  /* display: none; */
+}
+
+.left-img-arrow:hover,
+.right-img-arrow:hover,
+.left-img-arrow:active,
+.right-img-arrow:active {
+  color: #FCA311;
 }
 
 .buttons-beer-library-item {
@@ -310,6 +349,7 @@ White: FFFFFF */
   padding-left: 1rem;
   padding-right: 1rem;
   text-align: center;
+  font-size: 0.8rem;
 }
 
 .bottom-flex-container-beer-library-item {

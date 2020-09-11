@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import hops from '../beers/hops.png';
 import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
 
 const BeerLibraryItem = ({ beer }) => {
   const beerLibraryContext = useContext(BeerLibraryContext);
   const { deleteBeer, setCurrentBeer, clearCurrentBeer } = beerLibraryContext;
+
+  const [showImgArrows, setShowImgArrows] = useState(false);
 
   const {
     _id,
@@ -41,7 +43,12 @@ const BeerLibraryItem = ({ beer }) => {
           {<p>{ratingStars}</p>}
         </div>
         <div className="top-right-container-beer-library-item">
-          <img src={imgURL ? imgURL : hops} alt='' className='beer-item-img' />
+          <img src={imgURL ? imgURL : hops} alt=''
+            className={showImgArrows ? 'beer-library-item-img opaque' : 'beer-library-item-img'}
+            onMouseEnter={() => setShowImgArrows(true)}
+            onMouseLeave={() => setShowImgArrows(false)}/>
+          {showImgArrows && <span onMouseEnter={() => setShowImgArrows(true)} onMouseLeave={() => setShowImgArrows(false)} className="material-icons left-img-arrow">keyboard_arrow_left</span>}
+          {showImgArrows && <span onMouseEnter={() => setShowImgArrows(true)} onMouseLeave={() => setShowImgArrows(false)} className="material-icons right-img-arrow">keyboard_arrow_right</span>}
         </div>
       </div>
       <div className="middle-flex-container-beer-library-item">
