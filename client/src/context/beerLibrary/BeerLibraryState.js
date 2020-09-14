@@ -9,7 +9,8 @@ import {
   SET_CURRENT_BEER,
   CLEAR_CURRENT_BEER,
   UPDATE_BEER,
-  BEER_LIBRARY_ERROR
+  BEER_LIBRARY_ERROR,
+  LOAD_BEER_IMAGES,
 } from '../types';
 
 const BeerLibraryState = props => {
@@ -17,7 +18,8 @@ const BeerLibraryState = props => {
     beerLibrary: null,
     loading: true,
     error: null,
-    current: null
+    current: null,
+    beerImages: null
   }
   const [state, dispatch] = useReducer(beerLibraryReducer, initialState);
 
@@ -25,9 +27,23 @@ const BeerLibraryState = props => {
   const getBeerLibrary = async () => {
     try {
       const res = await axios.get('api/beers');
+      const beerImageArray = [];
+      for (let i=0; i < res.data.length; i++) {
+        beerImageArray.push({
+          _id: res.data[i]._id,
+          images: []
+        });
+      }
+      console.log(`BEER IMAGE OBJECT: ${beerImageArray}`);
+
+      const beerLibraryAndImageArray = {
+        beerLibrary: res.data,
+        beerImageArray
+      };
+
       dispatch({
         type: GET_BEER_LIBRARY,
-        payload: res.data
+        payload: beerLibraryAndImageArray
       });
     } catch (err) {
       dispatch({
@@ -106,6 +122,31 @@ const BeerLibraryState = props => {
     }
   }
 
+  // Load beer images
+  const loadBeerImages = async (beerName, _id) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const res = await axios.post('api/beerImages', beerName, config);
+      const imagesAndId = {
+        images: res.data,
+        _id
+      };
+      dispatch({
+        type: LOAD_BEER_IMAGES,
+        payload: imagesAndId
+      });
+    } catch (err) {
+      dispatch({
+        type: BEER_LIBRARY_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
 
   return (
     <BeerLibraryContext.Provider
@@ -113,13 +154,15 @@ const BeerLibraryState = props => {
         beerLibrary: state.beerLibrary,
         loading: state.loading,
         current: state.current,
+        beerImages: state.beerImages,
         error: state.error,
         getBeerLibrary,
         addBeer,
         deleteBeer,
         setCurrentBeer,
         clearCurrentBeer,
-        updateBeer
+        updateBeer,
+        loadBeerImages
       }}
     >
       {props.children}

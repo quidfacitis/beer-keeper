@@ -5,6 +5,7 @@ import {
   SET_CURRENT_BEER,
   CLEAR_CURRENT_BEER,
   UPDATE_BEER,
+  LOAD_BEER_IMAGES,
   BEER_LIBRARY_ERROR
 } from '../types';
 
@@ -13,8 +14,9 @@ export default (state, action) => {
     case GET_BEER_LIBRARY:
       return {
         ...state,
-        beerLibrary: action.payload,
-        loading: false
+        beerLibrary: action.payload.beerLibrary,
+        loading: false,
+        beerImages: action.payload.beerImageArray
       }
     case ADD_BEER:
       return {
@@ -43,6 +45,11 @@ export default (state, action) => {
         ...state,
         beerLibrary: state.beerLibrary.map(beer => beer._id === action.payload._id ? action.payload : beer),
         loading: false
+      }
+    case LOAD_BEER_IMAGES:
+      return {
+        ...state,
+        beerImages: state.beerImages.map(beerImage => beerImage._id === action.payload._id ? { _id: beerImage._id, images: action.payload.images} : beerImage)
       }
     case BEER_LIBRARY_ERROR:
       return {
