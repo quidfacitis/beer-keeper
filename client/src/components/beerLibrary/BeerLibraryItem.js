@@ -4,7 +4,7 @@ import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
 
 const BeerLibraryItem = ({ beer }) => {
   const beerLibraryContext = useContext(BeerLibraryContext);
-  const { deleteBeer, setCurrentBeer, clearCurrentBeer, loadBeerImages, beerImages } = beerLibraryContext;
+  const { beerLibrary, deleteBeer, setCurrentBeer, clearCurrentBeer, loadBeerImages, beerImages } = beerLibraryContext;
 
   const [showImgArrows, setShowImgArrows] = useState(false);
   const [currentBeerImage, setCurrentBeerImage] = useState(-1);
@@ -12,10 +12,10 @@ const BeerLibraryItem = ({ beer }) => {
 
   useEffect(() => {
     let beerHasImages = beerImages.filter(beerImage => beerImage._id === beer._id);
-    if(beerHasImages) {
+    if(beerHasImages[0]) {
       setThisBeersImages(beerHasImages[0].images);
     };
-  }, [beerImages]);
+  }, [beerImages, beerLibrary, beer._id]);
 
   const {
     _id,
