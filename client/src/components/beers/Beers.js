@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import BeerItem from './BeerItem';
 import ShowcasedBeer from './ShowcasedBeer';
 import BeerContext from '../../context/beer/beerContext';
+import Spinner from '../layout/Spinner';
 
 const Beers = () => {
 
@@ -12,6 +13,7 @@ const Beers = () => {
 
   const [displayedBeersPage, setDisplayedBeersPage] = useState(1);
   const [showcasedBeer, setShowcasedBeer] = useState(null);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const beerMiniPageButtons = [];
   let displayedBeers = [];
@@ -21,6 +23,7 @@ const Beers = () => {
     console.log(`beersLoading is now ${beersLoading}`);
     setShowcasedBeer(null);
     getBeers();
+    setShowSpinner(true);
   }
 
   const onMiniPageButtonClick = (pageNum) => {
@@ -49,11 +52,15 @@ const Beers = () => {
     console.log(`displayedBeers: ${displayedBeers}`);
   }
 
+  const onImgLoad = () => {
+    setShowSpinner(false);
+  };
 
   return (
     <div>
       <div className="centered">
         <button onClick={findNewBeers} className="big-btn">Find new beers</button>
+        {showSpinner && <div className="centered" style={{marginTop: '7rem'}}><Spinner /></div>}
       </div>
 
       <div className="beers-container">
@@ -64,7 +71,7 @@ const Beers = () => {
             </span>
           ))}
         </div>
-        <div className="showcased-beer-container">
+        <div className="showcased-beer-container" onLoad={onImgLoad}>
           {!beersLoading && <ShowcasedBeer beer={showcasedBeer === null ? displayedBeers[0] : showcasedBeer}/>}
         </div>
         <div className="displayed-beer-column-right">

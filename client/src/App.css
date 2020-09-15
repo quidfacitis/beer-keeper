@@ -105,6 +105,7 @@ White: FFFFFF */
   border-radius: 5%;
   cursor: pointer;
   margin-bottom: 1rem;
+  display: block;
 }
 .big-btn::-moz-focus-inner { border: 0; }
 
@@ -280,6 +281,7 @@ White: FFFFFF */
 .top-right-container-beer-library-item {
   width: 30%;
   padding-right: 1rem;
+  padding-top: 0.5rem;
   position: relative;
 }
 

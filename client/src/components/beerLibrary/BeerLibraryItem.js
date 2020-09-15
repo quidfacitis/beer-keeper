@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import hops from '../beers/hops.png';
 import BeerLibraryContext from '../../context/beerLibrary/beerLibraryContext';
+import Spinner from '../layout/Spinner';
 
 const BeerLibraryItem = ({ beer }) => {
   const beerLibraryContext = useContext(BeerLibraryContext);
@@ -9,6 +10,10 @@ const BeerLibraryItem = ({ beer }) => {
   const [showImgArrows, setShowImgArrows] = useState(false);
   const [currentBeerImage, setCurrentBeerImage] = useState(-1);
   const [thisBeersImages, setThisBeersImages] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [style, setStyle] = useState({
+      display: 'none'
+    });
 
   useEffect(() => {
     let beerHasImages = beerImages.filter(beerImage => beerImage._id === beer._id);
@@ -33,7 +38,18 @@ const BeerLibraryItem = ({ beer }) => {
     clearCurrentBeer();
   };
 
+  const onImgLoad = () => {
+    setShowSpinner(false);
+    setStyle({
+      display: 'inline-block'
+    });
+  };
+
   const onLoadBeerImages = () => {
+    setShowSpinner(true);
+    setStyle({
+      display: 'none'
+    });
     if (currentBeerImage === -1) {
       console.log(`LOAD BEER IMAGES FOR ${name}`);
       loadBeerImages({ beerName: name }, beer._id);
@@ -65,14 +81,19 @@ const BeerLibraryItem = ({ beer }) => {
           {<p>{ratingStars}</p>}
         </div>
         <div className="top-right-container-beer-library-item">
+          {showSpinner && <Spinner />}
           {thisBeersImages.length === 0 ? <img src={imgURL ? imgURL : hops} alt=''
             className={showImgArrows ? 'beer-library-item-img opaque' : 'beer-library-item-img'}
+            style={style}
             onMouseEnter={() => setShowImgArrows(true)}
-            onMouseLeave={() => setShowImgArrows(false)}/> :
+            onMouseLeave={() => setShowImgArrows(false)}
+            onLoad={onImgLoad}/> :
             <img src={thisBeersImages[currentBeerImage]} alt=''
             className={showImgArrows ? 'beer-library-item-img opaque' : 'beer-library-item-img'}
+            style={style}
             onMouseEnter={() => setShowImgArrows(true)}
-            onMouseLeave={() => setShowImgArrows(false)}/>
+            onMouseLeave={() => setShowImgArrows(false)}
+            onLoad={onImgLoad}/>
           }
           {showImgArrows && <span onMouseEnter={() => setShowImgArrows(true)} onMouseLeave={() => setShowImgArrows(false)} className="material-icons left-img-arrow">keyboard_arrow_left</span>}
           {showImgArrows && <span
