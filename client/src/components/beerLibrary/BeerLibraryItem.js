@@ -61,6 +61,14 @@ const BeerLibraryItem = ({ beer }) => {
     }
   }
 
+  const onLeftArrowClick = () => {
+    setShowSpinner(true);
+    setStyle({
+      display: 'none'
+    });
+    setCurrentBeerImage(currentBeerImage - 1);
+  }
+
   const ratingStars = [];
 
   for (let i=1; i <= 5; i++ ) {
@@ -82,7 +90,7 @@ const BeerLibraryItem = ({ beer }) => {
         </div>
         <div className="top-right-container-beer-library-item">
           {showSpinner && <Spinner />}
-          {thisBeersImages.length === 0 ? <img src={imgURL ? imgURL : hops} alt=''
+          {(thisBeersImages.length === 0 || currentBeerImage === -1) ? <img src={imgURL ? imgURL : hops} alt=''
             className={showImgArrows ? 'beer-library-item-img opaque' : 'beer-library-item-img'}
             style={style}
             onMouseEnter={() => setShowImgArrows(true)}
@@ -95,7 +103,11 @@ const BeerLibraryItem = ({ beer }) => {
             onMouseLeave={() => setShowImgArrows(false)}
             onLoad={onImgLoad}/>
           }
-          {showImgArrows && <span onMouseEnter={() => setShowImgArrows(true)} onMouseLeave={() => setShowImgArrows(false)} className="material-icons left-img-arrow">keyboard_arrow_left</span>}
+          {(currentBeerImage > -1 && showImgArrows) && <span
+            onMouseEnter={() => setShowImgArrows(true)}
+            onMouseLeave={() => setShowImgArrows(false)}
+            onClick={onLeftArrowClick}
+            className="material-icons left-img-arrow">keyboard_arrow_left</span>}
           {showImgArrows && <span
             onMouseEnter={() => setShowImgArrows(true)}
             onMouseLeave={() => setShowImgArrows(false)}
