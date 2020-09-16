@@ -9,8 +9,9 @@ import {
   SET_CURRENT_BEER,
   CLEAR_CURRENT_BEER,
   UPDATE_BEER,
-  BEER_LIBRARY_ERROR,
   LOAD_BEER_IMAGES,
+  CLEAR_BEER_IMAGES,
+  BEER_LIBRARY_ERROR
 } from '../types';
 
 const BeerLibraryState = props => {
@@ -147,6 +148,20 @@ const BeerLibraryState = props => {
     }
   };
 
+  const clearBeerImages = _id => {
+    try {
+      dispatch({
+        type: CLEAR_BEER_IMAGES,
+        payload: _id
+      });
+    } catch (err)  {
+      dispatch({
+        type: BEER_LIBRARY_ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
 
   return (
     <BeerLibraryContext.Provider
@@ -162,7 +177,8 @@ const BeerLibraryState = props => {
         setCurrentBeer,
         clearCurrentBeer,
         updateBeer,
-        loadBeerImages
+        loadBeerImages,
+        clearBeerImages
       }}
     >
       {props.children}

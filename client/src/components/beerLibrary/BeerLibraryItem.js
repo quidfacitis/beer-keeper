@@ -5,7 +5,7 @@ import Spinner from '../layout/Spinner';
 
 const BeerLibraryItem = ({ beer }) => {
   const beerLibraryContext = useContext(BeerLibraryContext);
-  const { beerLibrary, deleteBeer, setCurrentBeer, clearCurrentBeer, loadBeerImages, beerImages } = beerLibraryContext;
+  const { beerLibrary, deleteBeer, updateBeer, setCurrentBeer, clearCurrentBeer, loadBeerImages, beerImages, clearBeerImages } = beerLibraryContext;
 
   const [showImgArrows, setShowImgArrows] = useState(false);
   const [currentBeerImage, setCurrentBeerImage] = useState(-1);
@@ -69,6 +69,12 @@ const BeerLibraryItem = ({ beer }) => {
     setCurrentBeerImage(currentBeerImage - 1);
   }
 
+  const onSaveImg = () => {
+    updateBeer({ _id, imgURL: thisBeersImages[currentBeerImage] });
+    clearBeerImages(_id);
+    setCurrentBeerImage(-1);
+  };
+
   const ratingStars = [];
 
   for (let i=1; i <= 5; i++ ) {
@@ -113,6 +119,13 @@ const BeerLibraryItem = ({ beer }) => {
             onMouseLeave={() => setShowImgArrows(false)}
             onClick={onLoadBeerImages}
             className="material-icons right-img-arrow">keyboard_arrow_right</span>}
+          {(currentBeerImage > -1 && !showSpinner) &&
+            <div className="centered">
+              <button
+              onClick={onSaveImg} className="buttons-beer-library-item"
+              >Save</button>
+            </div>
+          }
         </div>
       </div>
       <div className="middle-flex-container-beer-library-item">
